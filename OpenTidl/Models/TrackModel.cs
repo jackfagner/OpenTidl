@@ -67,6 +67,19 @@ namespace OpenTidl.Models
         public Int32 VolumeNumber { get; private set; }
 
 
+        [DataMember(Name = "url")]
+        public String Url { get; private set; }
+
+        [DataMember(Name = "premiumStreamingOnly")]
+        public Boolean PremiumStreamingOnly { get; private set; }
+
+        [DataMember(Name = "popularity")]
+        public Int32 Popularity { get; private set; }
+
+        [DataMember(Name = "copyright")]
+        public String Copyright { get; private set; }
+
+
         #region json helpers
 
         [DataMember(Name = "streamStartDate")]

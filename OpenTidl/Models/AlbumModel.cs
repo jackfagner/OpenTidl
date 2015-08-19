@@ -73,7 +73,19 @@ namespace OpenTidl.Models
 
         [DataMember(Name = "title")]
         public String Title { get; private set; }
-        
+
+
+        [DataMember(Name = "url")]
+        public String Url { get; private set; }
+
+        [DataMember(Name = "version")]
+        public String Version { get; private set; }
+
+        [DataMember(Name = "type")]
+        public String Type { get; private set; }
+
+        [DataMember(Name = "premiumStreamingOnly")]
+        public Boolean PremiumStreamingOnly { get; private set; }
 
 
         #region json helpers

@@ -44,6 +44,12 @@ namespace OpenTidl.Models
         public DateTime? ValidUntil { get; private set; }
 
 
+        [DataMember(Name = "premiumAccess")]
+        public Boolean PremiumAccess { get; private set; }
+
+        [DataMember(Name = "canGetTrial")]
+        public Boolean CanGetTrial { get; private set; }
+
 
         [IgnoreDataMember]
         public Boolean IsBasicSubscription

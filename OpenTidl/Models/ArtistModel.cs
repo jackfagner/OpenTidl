@@ -40,5 +40,9 @@ namespace OpenTidl.Models
 
         [DataMember(Name = "type")]
         public String Type { get; private set; }
+
+
+        [DataMember(Name = "url")]
+        public String Url { get; private set; }
     }
 }

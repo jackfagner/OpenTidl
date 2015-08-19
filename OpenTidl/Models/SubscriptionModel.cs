@@ -43,6 +43,9 @@ namespace OpenTidl.Models
         [DataMember(Name = "price")]
         public Int32 Price { get; private set; }
 
+        [DataMember(Name = "offlineGracePeriod")]
+        public Int32 OfflineGracePeriod { get; private set; }
+
         [IgnoreDataMember]
         public SubscriptionType Type { get; private set; }
 
