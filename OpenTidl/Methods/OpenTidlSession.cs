@@ -28,7 +28,7 @@ using OpenTidl.Transport;
 
 namespace OpenTidl.Methods
 {
-    public class OpenTidlSession : IDisposable
+    public class OpenTidlSession
     {
         #region properties
 
@@ -465,22 +465,12 @@ namespace OpenTidl.Methods
             return this.OpenTidlClient.HandleResponse(response);
         }
 
-        public void Dispose()
-        {
-            try
-            {
-                if (this.LoginResult != null)
-                    this.Logout().Sync(1000);
-            }
-            catch { }
-        }
-
         #endregion
 
 
         #region construction
 
-        internal OpenTidlSession(OpenTidlClient client, LoginModel loginModel)
+        public OpenTidlSession(OpenTidlClient client, LoginModel loginModel)
         {
             this.OpenTidlClient = client;
             this.LoginResult = loginModel;
