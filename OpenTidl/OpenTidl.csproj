@@ -62,8 +62,11 @@
     <Compile Include="Enums\VideoQuality.cs" />
     <Compile Include="HelperExtensions.cs" />
     <Compile Include="Methods\OpenTidlLoginMethods.cs" />
+    <Compile Include="Methods\OpenTidlLoginMethodsSync.cs" />
     <Compile Include="Methods\OpenTidlPublicMethods.cs" />
+    <Compile Include="Methods\OpenTidlPublicMethodsSync.cs" />
     <Compile Include="Methods\OpenTidlSession.cs" />
+    <Compile Include="Methods\OpenTidlSessionSync.cs" />
     <Compile Include="Methods\OpenTidlStreamMethods.cs" />
     <Compile Include="Models\AlbumModel.cs" />
     <Compile Include="Models\AlbumReviewModel.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Models\ArtistModel.cs" />
     <Compile Include="Models\Base\ErrorModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
+    <Compile Include="Models\Base\WebStreamModel.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Models\ContributorModel.cs" />
     <Compile Include="Models\CountryModel.cs" />

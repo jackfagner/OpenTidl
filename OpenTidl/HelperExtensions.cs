@@ -21,14 +21,22 @@ namespace OpenTidl
                 return ms.ToArray();
             }
         }
-
-        public static T Sync<T>(this Task<T> task, Int32? timeout = null)
+        
+        /// <summary>
+        /// Warning: causes deadlocks when used on UI thread
+        /// </summary>
+        private static T Sync<T>(this Task<T> task, Int32? timeout = null)
         {
             if (timeout.HasValue && !task.Wait(timeout.Value))
                 throw new TimeoutException();
             /*if (!timeout.HasValue)
                 task.Wait();*/
             return task.Result;
+        }
+
+        public static T Sync<T>(this Func<Task<T>> task, Int32? timeout = null)
+        {
+            return Task.Run(task).Sync(timeout);
         }
     }
 }

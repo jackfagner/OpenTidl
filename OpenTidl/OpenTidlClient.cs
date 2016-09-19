@@ -83,7 +83,7 @@ namespace OpenTidl
             CountryModel cc = null;
             try
             {
-                cc = this.GetCountry().Sync(1000);
+                cc = this.GetCountry(1000);
             }
             catch { }
             if (cc != null && !String.IsNullOrEmpty(cc.CountryCode))

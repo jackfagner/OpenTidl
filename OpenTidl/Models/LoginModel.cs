@@ -41,5 +41,17 @@ namespace OpenTidl.Models
 
         [IgnoreDataMember]
         public LoginType LoginType { get; internal set; }
+
+
+        internal static LoginModel FromSession(SessionModel session)
+        {
+            return new LoginModel()
+            {
+                CountryCode = session.CountryCode,
+                SessionId = session.SessionId,
+                UserId = session.UserId,
+                LoginType = LoginType.Unknown
+            };
+        }
     }
 }

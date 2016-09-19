@@ -40,8 +40,7 @@ namespace OpenTidl.Transport
 
 
         #region methods
-
-        //FIXME: Make async
+        
         internal async Task<RestResponse<T>> Process<T>(String path, Object query, Object request, String method) where T : ModelBase
         {
             var encoding = new UTF8Encoding(false);
@@ -76,11 +75,23 @@ namespace OpenTidl.Transport
 
         internal Stream GetStream(String url)
         {
+            try
+            {
+                var response = GetWebResponse(url);
+                if (response != null)
+                    return response.GetResponseStream();
+            }
+            catch { }
+            return null;
+        }
+
+        internal HttpWebResponse GetWebResponse(String url)
+        {
             var req = CreateRequest(url, "GET");
             req.Timeout = 2000;
             try
             {
-                return (req.GetResponse() as HttpWebResponse).GetResponseStream();
+                return req.GetResponse() as HttpWebResponse;
             }
             catch
             {

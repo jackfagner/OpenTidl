@@ -36,7 +36,7 @@ namespace OpenTidl
         /// <summary>
         /// Helper method to retrieve a stream with an album cover image
         /// </summary>
-        public Stream GetAlbumCover(AlbumModel model, AlbumCoverSize size)
+        public WebStreamModel GetAlbumCover(AlbumModel model, AlbumCoverSize size)
         {
             return GetAlbumCover(model.Cover, model.Id, size);
         }
@@ -44,7 +44,7 @@ namespace OpenTidl
         /// <summary>
         /// Helper method to retrieve a stream with an album cover image
         /// </summary>
-        public Stream GetAlbumCover(String cover, Int32 albumId, AlbumCoverSize size)
+        public WebStreamModel GetAlbumCover(String cover, Int32 albumId, AlbumCoverSize size)
         {
             var w = 750;
             var h = 750;
@@ -55,13 +55,13 @@ namespace OpenTidl
                 url = String.Format("http://resources.wimpmusic.com/images/{0}/{1}x{2}.jpg", cover.Replace('-', '/'), w, h);
             else
                 url = String.Format("http://images.tidalhifi.com/im/im?w={1}&h={2}&albumid={0}&noph", albumId, w, h);
-            return RestClient.GetStream(url);
+            return new WebStreamModel(RestClient.GetWebResponse(url));
         }
 
         /// <summary>
         /// Helper method to retrieve a stream with an artists picture
         /// </summary>
-        public Stream GetArtistPicture(ArtistModel model, ArtistPictureSize size)
+        public WebStreamModel GetArtistPicture(ArtistModel model, ArtistPictureSize size)
         {
             return GetArtistPicture(model.Picture, model.Id, size);
         }
@@ -69,7 +69,7 @@ namespace OpenTidl
         /// <summary>
         /// Helper method to retrieve a stream with an artists picture
         /// </summary>
-        public Stream GetArtistPicture(String picture, Int32 artistId, ArtistPictureSize size)
+        public WebStreamModel GetArtistPicture(String picture, Int32 artistId, ArtistPictureSize size)
         {
             var w = 750;
             var h = 500;
@@ -80,13 +80,13 @@ namespace OpenTidl
                 url = String.Format("http://resources.wimpmusic.com/images/{0}/{1}x{2}.jpg", picture.Replace('-', '/'), w, h);
             else
                 url = String.Format("http://images.tidalhifi.com/im/im?w={1}&h={2}&artistid={0}&noph", artistId, w, h);
-            return RestClient.GetStream(url);
+            return new WebStreamModel(RestClient.GetWebResponse(url));
         }
 
         /// <summary>
         /// Helper method to retrieve a stream with a playlist image
         /// </summary>
-        public Stream GetPlaylistImage(PlaylistModel model, PlaylistImageSize size)
+        public WebStreamModel GetPlaylistImage(PlaylistModel model, PlaylistImageSize size)
         {
             return GetPlaylistImage(model.Image, model.Uuid, size);
         }
@@ -94,7 +94,7 @@ namespace OpenTidl
         /// <summary>
         /// Helper method to retrieve a stream with a playlist image
         /// </summary>
-        public Stream GetPlaylistImage(String image, String playlistUuid, PlaylistImageSize size)
+        public WebStreamModel GetPlaylistImage(String image, String playlistUuid, PlaylistImageSize size)
         {
             var w = 750;
             var h = 500;
@@ -105,13 +105,13 @@ namespace OpenTidl
                 url = String.Format("http://resources.wimpmusic.com/images/{0}/{1}x{2}.jpg", image.Replace('-', '/'), w, h);
             else
                 url = String.Format("http://images.tidalhifi.com/im/im?w={1}&h={2}&uuid={0}&rows=2&cols=3&noph", playlistUuid, w, h);
-            return RestClient.GetStream(url);
+            return new WebStreamModel(RestClient.GetWebResponse(url));
         }
 
         /// <summary>
         /// Helper method to retrieve a stream with a video conver image
         /// </summary>
-        public Stream GetVideoImage(VideoModel model, VideoImageSize size)
+        public WebStreamModel GetVideoImage(VideoModel model, VideoImageSize size)
         {
             return GetVideoImage(model.ImageId, model.ImagePath, size);
         }
@@ -119,7 +119,7 @@ namespace OpenTidl
         /// <summary>
         /// Helper method to retrieve a stream with a video conver image
         /// </summary>
-        public Stream GetVideoImage(String imageId, String imagePath, VideoImageSize size)
+        public WebStreamModel GetVideoImage(String imageId, String imagePath, VideoImageSize size)
         {
             var w = 750;
             var h = 500;
@@ -130,7 +130,7 @@ namespace OpenTidl
                 url = String.Format("http://resources.wimpmusic.com/images/{0}/{1}x{2}.jpg", imageId.Replace('-', '/'), w, h);
             else
                 url = String.Format("http://images.tidalhifi.com/im/im?w={1}&h={2}&img={0}&noph", imagePath, w, h);
-            return RestClient.GetStream(url);
+            return new WebStreamModel(RestClient.GetWebResponse(url));
         }
 
         #endregion
@@ -141,9 +141,9 @@ namespace OpenTidl
         /// <summary>
         /// Helper method to retrieve the audio/video stream with correct user-agent, etc.
         /// </summary>
-        public Stream GetStream(String streamUrl)
+        public WebStreamModel GetWebStream(String streamUrl)
         {
-            return RestClient.GetStream(streamUrl);
+            return new WebStreamModel(RestClient.GetWebResponse(streamUrl));
         }
 
         #endregion

@@ -93,7 +93,19 @@ namespace OpenTidl
 
         #endregion
 
-        
+
+        #region session methods
+
+        public async Task<OpenTidlSession> RestoreSession(String sessionId)
+        {
+            return new OpenTidlSession(this, LoginModel.FromSession(HandleResponse(await RestClient.Process<SessionModel>(
+                RestUtility.FormatUrl("/sessions/{sessionId}", new { sessionId = sessionId }),
+                null, null, "GET"))));
+        }
+
+        #endregion
+
+
         #region user methods
 
         public async Task<RecoverPasswordResponseModel> RecoverPassword(String username)
