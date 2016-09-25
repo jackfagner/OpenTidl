@@ -55,29 +55,29 @@ namespace OpenTidl.Methods
             return HelperExtensions.Sync(() => this.GetPlaylistTracks(playlistUuid, offset ?? 0, limit ?? 9999), timeout);
         }
 
-        public EmptyModel AddPlaylistTracks(String playlistUuid, IEnumerable<Int32> trackIds, Int32? toIndex, Int32? timeout)
+        public EmptyModel AddPlaylistTracks(String playlistUuid, String playlistETag, IEnumerable<Int32> trackIds, Int32? toIndex, Int32? timeout)
         {
-            return HelperExtensions.Sync(() => this.AddPlaylistTracks(playlistUuid, trackIds, toIndex ?? 0), timeout);
+            return HelperExtensions.Sync(() => this.AddPlaylistTracks(playlistUuid, playlistETag, trackIds, toIndex ?? 0), timeout);
         }
 
-        public EmptyModel DeletePlaylistTracks(String playlistUuid, IEnumerable<Int32> indices, Int32? timeout)
+        public EmptyModel DeletePlaylistTracks(String playlistUuid, String playlistETag, IEnumerable<Int32> indices, Int32? timeout)
         {
-            return HelperExtensions.Sync(() => this.DeletePlaylistTracks(playlistUuid, indices), timeout);
+            return HelperExtensions.Sync(() => this.DeletePlaylistTracks(playlistUuid, playlistETag, indices), timeout);
         }
 
-        public EmptyModel DeletePlaylist(String playlistUuid, Int32? timeout)
+        public EmptyModel DeletePlaylist(String playlistUuid, String playlistETag, Int32? timeout)
         {
-            return HelperExtensions.Sync(() => this.DeletePlaylist(playlistUuid), timeout);
+            return HelperExtensions.Sync(() => this.DeletePlaylist(playlistUuid, playlistETag), timeout);
         }
 
-        public EmptyModel MovePlaylistTracks(String playlistUuid, IEnumerable<Int32> indices, Int32 toIndex, Int32? timeout)
+        public EmptyModel MovePlaylistTracks(String playlistUuid, String playlistETag, IEnumerable<Int32> indices, Int32? toIndex, Int32? timeout)
         {
-            return HelperExtensions.Sync(() => this.MovePlaylistTracks(playlistUuid, indices, toIndex), timeout);
+            return HelperExtensions.Sync(() => this.MovePlaylistTracks(playlistUuid, playlistETag, indices, toIndex ?? 0), timeout);
         }
 
-        public EmptyModel UpdatePlaylist(String playlistUuid, String title, Int32? timeout)
+        public EmptyModel UpdatePlaylist(String playlistUuid, String playlistETag, String title, Int32? timeout)
         {
-            return HelperExtensions.Sync(() => this.UpdatePlaylist(playlistUuid, title), timeout);
+            return HelperExtensions.Sync(() => this.UpdatePlaylist(playlistUuid, playlistETag, title), timeout);
         }
 
         #endregion

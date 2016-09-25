@@ -58,13 +58,15 @@ namespace OpenTidl.Transport
 
         #region construction
 
-        public RestResponse(String responseData, Int32 statusCode)
+        public RestResponse(String responseData, Int32 statusCode, String eTag)
         {
             if (statusCode < 300)
                 this.Model = DeserializeObject<T>(responseData);
             if (statusCode >= 400)
                 this.Exception = new OpenTidlException(DeserializeObject<ErrorModel>(responseData));
             this.StatusCode = statusCode;
+            if (this.Model != null)
+                (this.Model as ModelBase).ETag = eTag;
         }
 
         public RestResponse(Exception ex)

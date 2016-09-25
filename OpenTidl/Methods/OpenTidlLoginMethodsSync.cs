@@ -36,10 +36,11 @@ namespace OpenTidl
             return HelperExtensions.Sync(() => this.LoginWithFacebook(accessToken), timeout);
         }
 
+        /*[Obsolete]
         public OpenTidlSession LoginWithSpidToken(String accessToken, String spidUserId, Int32? timeout)
         {
             return HelperExtensions.Sync(() => this.LoginWithSpidToken(accessToken, spidUserId), timeout);
-        }
+        }*/
 
         public OpenTidlSession LoginWithToken(String authenticationToken, Int32? timeout)
         {

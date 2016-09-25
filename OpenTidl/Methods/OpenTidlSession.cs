@@ -33,7 +33,8 @@ namespace OpenTidl.Methods
         #region properties
 
         private OpenTidlClient OpenTidlClient { get; set; }
-        private RestClient RestClient { get { return OpenTidlClient.RestClient; } }
+        //private RestClient RestClient { get { return OpenTidlClient.RestClient; } }
+        private RestClient RestClient { get; set; }
 
         public LoginModel LoginResult { get; private set; }
 
@@ -90,7 +91,7 @@ namespace OpenTidl.Methods
                 }, null, "GET"));
         }
 
-        public async Task<EmptyModel> AddPlaylistTracks(String playlistUuid, IEnumerable<Int32> trackIds, Int32 toIndex = 0) //, String ifNoneMatch)
+        public async Task<EmptyModel> AddPlaylistTracks(String playlistUuid, String playlistETag, IEnumerable<Int32> trackIds, Int32 toIndex = 0)
         {
             return HandleResponse(await RestClient.Process<EmptyModel>(
                 RestUtility.FormatUrl("/playlists/{uuid}/tracks", new { uuid = playlistUuid }), new
@@ -101,10 +102,11 @@ namespace OpenTidl.Methods
                 {
                     trackIds = String.Join(",", trackIds),
                     toIndex = toIndex
-                }, "POST"));
+                }, "POST",
+                Header("If-None-Match", playlistETag)));
         }
 
-        public async Task<EmptyModel> DeletePlaylistTracks(String playlistUuid, IEnumerable<Int32> indices) //, String ifNoneMatch)
+        public async Task<EmptyModel> DeletePlaylistTracks(String playlistUuid, String playlistETag, IEnumerable<Int32> indices)
         {
             return HandleResponse(await RestClient.Process<EmptyModel>(
                 RestUtility.FormatUrl("/playlists/{uuid}/tracks/{indices}", new
@@ -115,10 +117,11 @@ namespace OpenTidl.Methods
                 {
                     sessionId = SessionId,
                     countryCode = CountryCode
-                }, null, "DELETE"));
+                }, null, "DELETE",
+                Header("If-None-Match", playlistETag)));
         }
 
-        public async Task<EmptyModel> DeletePlaylist(String playlistUuid) //, String ifNoneMatch)
+        public async Task<EmptyModel> DeletePlaylist(String playlistUuid, String playlistETag)
         {
             return HandleResponse(await RestClient.Process<EmptyModel>(
                 RestUtility.FormatUrl("/playlists/{uuid}", new
@@ -128,10 +131,11 @@ namespace OpenTidl.Methods
                 {
                     sessionId = SessionId,
                     countryCode = CountryCode
-                }, null, "DELETE"));
+                }, null, "DELETE",
+                Header("If-None-Match", playlistETag)));
         }
 
-        public async Task<EmptyModel> MovePlaylistTracks(String playlistUuid, IEnumerable<Int32> indices, Int32 toIndex) //, String ifNoneMatch)
+        public async Task<EmptyModel> MovePlaylistTracks(String playlistUuid, String playlistETag, IEnumerable<Int32> indices, Int32 toIndex = 0)
         {
             return HandleResponse(await RestClient.Process<EmptyModel>(
                 RestUtility.FormatUrl("/playlists/{uuid}/tracks/{indices}", new
@@ -145,10 +149,11 @@ namespace OpenTidl.Methods
                 }, new
                 {
                     toIndex = toIndex
-                }, "POST"));
+                }, "POST",
+                Header("If-None-Match", playlistETag)));
         }
 
-        public async Task<EmptyModel> UpdatePlaylist(String playlistUuid, String title) //, String ifNoneMatch)
+        public async Task<EmptyModel> UpdatePlaylist(String playlistUuid, String playlistETag, String title)
         {
             return HandleResponse(await RestClient.Process<EmptyModel>(
                 RestUtility.FormatUrl("/playlists/{uuid}", new
@@ -161,7 +166,8 @@ namespace OpenTidl.Methods
                 }, new
                 {
                     title = title
-                }, "POST"));
+                }, "POST",
+                Header("If-None-Match", playlistETag)));
         }
 
         #endregion
@@ -467,6 +473,11 @@ namespace OpenTidl.Methods
             return this.OpenTidlClient.HandleResponse(response);
         }
 
+        private KeyValuePair<String, String> Header(String header, String value)
+        {
+            return this.OpenTidlClient.Header(header, value);
+        }
+
         #endregion
 
 
@@ -476,6 +487,7 @@ namespace OpenTidl.Methods
         {
             this.OpenTidlClient = client;
             this.LoginResult = loginModel;
+            this.RestClient = new RestClient(client.Configuration.ApiEndpoint, client.Configuration.UserAgent, Header("X-Tidal-SessionId", loginModel?.SessionId ?? ""));
         }
 
         #endregion

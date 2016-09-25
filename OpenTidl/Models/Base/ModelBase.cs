@@ -29,6 +29,8 @@ namespace OpenTidl.Models.Base
     public abstract class ModelBase
     {
         #region properties
+
+        public String ETag { get; internal set; }
         
         #endregion
     }

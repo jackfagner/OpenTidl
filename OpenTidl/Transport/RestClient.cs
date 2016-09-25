@@ -35,19 +35,20 @@ namespace OpenTidl.Transport
 
         internal String ApiEndpoint { get; private set; }
         internal String UserAgent { get; private set; }
+        internal KeyValuePair<String, String>[] Headers { get; private set; }
 
         #endregion
 
 
         #region methods
-        
-        internal async Task<RestResponse<T>> Process<T>(String path, Object query, Object request, String method) where T : ModelBase
+
+        internal async Task<RestResponse<T>> Process<T>(String path, Object query, Object request, String method, params KeyValuePair<String, String>[] extraHeaders) where T : ModelBase
         {
             var encoding = new UTF8Encoding(false);
             var queryString = RestUtility.GetFormEncodedString(query);
             var url = String.IsNullOrEmpty(queryString) ? String.Format("{0}{1}", ApiEndpoint, path) : 
                 String.Format("{0}{1}?{2}", ApiEndpoint, path, queryString);
-            var req = CreateRequest(url, method);
+            var req = CreateRequest(url, method, extraHeaders);
             if (request != null)
             {
                 req.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
@@ -69,7 +70,7 @@ namespace OpenTidl.Transport
             }
             using (var sr = new StreamReader(response.GetResponseStream(), encoding))
             {
-                return new RestResponse<T>(sr.ReadToEnd(), (Int32)response.StatusCode);
+                return new RestResponse<T>(sr.ReadToEnd(), (Int32)response.StatusCode, response.Headers[HttpResponseHeader.ETag]);
             }
         }
 
@@ -87,7 +88,7 @@ namespace OpenTidl.Transport
 
         internal HttpWebResponse GetWebResponse(String url)
         {
-            var req = CreateRequest(url, "GET");
+            var req = CreateRequest(url, "GET", null);
             req.Timeout = 2000;
             try
             {
@@ -99,11 +100,21 @@ namespace OpenTidl.Transport
             }
         }
 
-        private HttpWebRequest CreateRequest(String url, String method)
+        private HttpWebRequest CreateRequest(String url, String method, KeyValuePair<String, String>[] extraHeaders)
         {
             var req = HttpWebRequest.Create(url) as HttpWebRequest;
             req.UserAgent = this.UserAgent;
             req.Method = method;
+            if (this.Headers != null)
+            {
+                foreach (var h in this.Headers)
+                    req.Headers[h.Key] = h.Value;
+            }
+            if (extraHeaders != null)
+            {
+                foreach (var h in extraHeaders)
+                    req.Headers[h.Key] = h.Value;
+            }
             return req;
         }
 
@@ -112,10 +123,11 @@ namespace OpenTidl.Transport
 
         #region construction
 
-        internal RestClient(String apiEndpoint, String userAgent)
+        internal RestClient(String apiEndpoint, String userAgent, params KeyValuePair<String, String>[] headers)
         {
             this.ApiEndpoint = apiEndpoint ?? "";
             this.UserAgent = userAgent;
+            this.Headers = headers;
         }
 
         #endregion

@@ -27,6 +27,7 @@ using OpenTidl.Models.Base;
 using OpenTidl.Models;
 using OpenTidl.Methods;
 using OpenTidl.Enums;
+using System.Net;
 
 namespace OpenTidl
 {
@@ -43,15 +44,20 @@ namespace OpenTidl
         #region properties
 
         public ClientConfiguration Configuration { get; private set; }
-        internal RestClient RestClient { get; private set; }
+        private RestClient RestClient { get; set; }
 
         private String LastSessionCountryCode { get; set; }
         private String DefaultCountryCode { get { return _defaultCountryCode.Value; } }
-        
+
         #endregion
 
 
         #region methods
+        
+        internal KeyValuePair<String, String> Header(String header, String value)
+        {
+            return new KeyValuePair<String, String>(header, value);
+        }
 
         internal T HandleResponse<T>(RestResponse<T> response) where T : ModelBase
         {
@@ -93,27 +99,6 @@ namespace OpenTidl
             return FALLBACK_COUNTRY_CODE;
         }
 
-        /*
-        public T Sync<T>(Task<T> task, Int32? timeout = null)
-        {
-            if (timeout.HasValue && !task.Wait(timeout.Value))
-                throw new TimeoutException();
-            return task.Result;
-        }
-
-        public Byte[] Sync(Stream stream, Int32? timeout = null)
-        {
-            using (var ms = new MemoryStream())
-            {
-                var task = stream.CopyToAsync(ms);
-                if (timeout.HasValue && !task.Wait(timeout.Value))
-                    throw new TimeoutException();
-                else if (!timeout.HasValue)
-                    task.Wait();
-                return ms.ToArray();
-            }
-        }*/
-
         #endregion
 
 
@@ -122,7 +107,7 @@ namespace OpenTidl
         public OpenTidlClient(ClientConfiguration config)
         {
             this.Configuration = config;
-            this.RestClient = new RestClient(config.ApiEndpoint, config.UserAgent);
+            this.RestClient = new RestClient(config.ApiEndpoint, config.UserAgent, Header("X-Tidal-Token", config.Token));
             this._defaultCountryCode = new Lazy<String>(() => GetDefaultCountryCode());
         }
 

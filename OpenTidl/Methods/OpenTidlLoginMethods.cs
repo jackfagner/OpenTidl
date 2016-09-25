@@ -44,6 +44,7 @@ namespace OpenTidl
             }, "POST"), LoginType.Facebook));
         }
 
+        /*[Obsolete]
         public async Task<OpenTidlSession> LoginWithSpidToken(String accessToken, String spidUserId)
         {
             return new OpenTidlSession(this, HandleLoginResponse(await RestClient.Process<LoginModel>("/login/spid/token", null, new
@@ -54,7 +55,7 @@ namespace OpenTidl
                 clientUniqueKey = Configuration.ClientUniqueKey,
                 clientVersion = Configuration.ClientVersion
             }, "POST"), LoginType.Spid));
-        }
+        }*/
 
         public async Task<OpenTidlSession> LoginWithToken(String authenticationToken)
         {
