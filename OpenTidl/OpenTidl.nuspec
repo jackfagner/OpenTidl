@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>jackfagner</authors>
+    <owners>jackfagner</owners>
+    <licenseUrl>https://raw.githubusercontent.com/jackfagner/OpenTidl/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jackfagner/OpenTidl</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2016 Jack Fagner</copyright>
+    <tags>tidal opentidal opentidl wimp</tags>
+  </metadata>
+</package>
