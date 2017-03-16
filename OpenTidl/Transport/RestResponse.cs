@@ -50,7 +50,6 @@ namespace OpenTidl.Transport
             {
                 return serializer.ReadObject(ms) as TModel;
             }
-
         }
 
         #endregion

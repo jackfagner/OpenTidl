@@ -99,7 +99,7 @@ namespace OpenTidl
 
         public async Task<OpenTidlSession> RestoreSession(String sessionId)
         {
-            return new OpenTidlSession(this, LoginModel.FromSession(HandleResponse(await RestClient.Process<SessionModel>(
+            return new OpenTidlSession(this, LoginModel.FromSession(HandleSessionResponse(await RestClient.Process<SessionModel>(
                 RestUtility.FormatUrl("/sessions/{sessionId}", new { sessionId = sessionId }),
                 null, null, "GET"))));
         }

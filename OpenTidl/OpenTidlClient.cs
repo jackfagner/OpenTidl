@@ -79,6 +79,16 @@ namespace OpenTidl
             return model;
         }
 
+        private SessionModel HandleSessionResponse(RestResponse<SessionModel> response)
+        {
+            if (response.Exception != null)
+                throw response.Exception;
+            var model = response.Model;
+            if (model != null)
+                this.LastSessionCountryCode = model.CountryCode;
+            return model;
+        }
+
         private String GetCountryCode()
         {
             return !String.IsNullOrEmpty(LastSessionCountryCode) ? LastSessionCountryCode : DefaultCountryCode;
