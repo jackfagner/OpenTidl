@@ -13,5 +13,12 @@ Most (relevant) functions used by TIDAL's web player or Android app are implemen
 
 Searching and fetching metadata for albums/artists/tracks does not require an active TIDAL subscription.
 
-**Disclaimer:**
+## Installation
+OpenTidl is now available on [NuGet](https://www.nuget.org/packages/OpenTidl/)
+```
+PM> Install-Package OpenTidl
+```
+
+
+## Disclaimer
 This product uses TIDAL but is not endorsed, certified or otherwise approved in any way by TIDAL. TIDAL is the registered trade mark of Aspiro.
