@@ -42,10 +42,7 @@ namespace OpenTidl.Models
 
         [DataMember(Name = "duration")]
         public Int32 Duration { get; private set; }
-
-        [DataMember(Name = "id")]
-        public Int32 Id { get; private set; }
-
+        
         [DataMember(Name = "image")]
         public String Image { get; private set; }
 

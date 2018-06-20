@@ -87,6 +87,12 @@ namespace OpenTidl.Models
         [DataMember(Name = "premiumStreamingOnly")]
         public Boolean PremiumStreamingOnly { get; private set; }
 
+        [DataMember(Name = "upc")]
+        public String Upc { get; private set; }
+
+        [DataMember(Name = "audioQuality")]
+        public String AudioQuality { get; private set; }
+
 
         #region json helpers
 
