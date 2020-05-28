@@ -31,7 +31,7 @@ namespace OpenTidl
 
         private static Lazy<ClientConfiguration> _defaultSettings = new Lazy<ClientConfiguration>(() =>
             new ClientConfiguration("https://api.tidalhifi.com/v1", "TIDAL_ANDROID/680 okhttp/3.3.1",
-                "kgsOOmYk3zShYrNP", DefaultClientUniqueKey, "1.12.2", "US"));
+                "pl4Vc0hemlAXD0mN", DefaultClientUniqueKey, "1.12.2", "US"));
 
         public static ClientConfiguration Default
         {
